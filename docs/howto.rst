@@ -8,7 +8,7 @@ Documentation can be written as rst files in `the_itinerar/docs`.
 
 
 To build and serve docs, use the commands::
-    
+    # TODO: Use makefile
     docker-compose -f local.yml up docs
 
 

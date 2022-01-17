@@ -1,0 +1,47 @@
+version: '3'
+
+# Use this file to specify configurations that will be specific to
+# production environments
+
+# volumes:
+#   production_postgres_data: {}
+#   production_postgres_data_backups: {}
+#   production_traefik: {}
+
+services:
+  # django: &django
+  #   image: the_itinerar_production_django
+
+  traefik:
+    # image: stuff
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+      - "0.0.0.0:5555:5555"
+
+  redis:
+    image: redis:6
+
+  celeryworker:
+    <<: *django
+    image: the_itinerar_production_celeryworker
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: the_itinerar_production_celerybeat
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: the_itinerar_production_flower
+    command: /start-flower
+
+  awscli:
+    build:
+      context: .
+      dockerfile: ./compose/production/aws/Dockerfile
+    env_file:
+      - ./.envs/.production/.django
+    volumes:
+      - production_postgres_data_backups:/backups:z

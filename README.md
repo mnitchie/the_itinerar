@@ -7,6 +7,7 @@ Trip planning and mis-spelling stuff
 
 ## Getting started
 
+# TODO: Update this to reflect the makefile
 1. `docker-compose -f local.yml build`
 2. `pre-commit install`
 3. `docker-compose -f local.yml up -d`

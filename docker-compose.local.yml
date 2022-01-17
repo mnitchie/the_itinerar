@@ -1,0 +1,77 @@
+version: '3'
+
+# Use this file to specify configurations that will be specific to
+# local environments
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  # traefik:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/production/traefik/Dockerfile
+  #   image: itinerar_traefik
+  #   volumes:
+  #     - production_traefik:/etc/traefik/acme:z
+  #   ports:
+  #     - "0.0.0.0:80:80"
+  #     # - "0.0.0.0:443:443"
+  #     - "0.0.0.0:5555:5555"
+
+  django: &django
+    volumes:
+      - .:/app:z
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: itinerar_postgres
+    container_name: itinerar_postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+      - local_postgres_data_backups:/backups:z
+    env_file:
+      - ./.envs/.local/.postgres
+
+  docs:
+    # TODO: Need volumes???
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./the_itinerar:/app/the_itinerar:z
+
+  redis:
+    image: redis:6
+    container_name: itinerar_redis
+
+  celeryworker:
+    depends_on:
+      - redis
+      - postgres
+
+  celerybeat:
+    depends_on:
+      - redis
+      - postgres
+
+
+  node:
+    build:
+      context: .
+      dockerfile: ./compose/local/node/Dockerfile
+    image: itinerar_node
+    container_name: itinerar_node
+    depends_on:
+      - django
+    volumes:
+      - .:/app:z
+      # http://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
+      - /app/node_modules
+    command: npm run dev
+    ports:
+      - "3000:3000"
+      # Expose browsersync UI: https://www.browsersync.io/docs/options/#option-ui
+      - "3001:3001"

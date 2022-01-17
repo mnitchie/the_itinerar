@@ -44,6 +44,7 @@ jobs:
       - name: Checkout Code Repository
         uses: actions/checkout@v2
 
+      # TODO: Update this to use the makefile
       - name: Build the Stack
         run:  docker-compose -f local.yml build
 
