@@ -48,7 +48,7 @@ services:
       - ./config:/app/config:z
       - ./the_itinerar:/app/the_itinerar:z
     ports:
-      - "7000:7000"
+      - "7001:7000"
     command: /start-docs
 
   redis:
