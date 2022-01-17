@@ -7,10 +7,8 @@ Trip planning and mis-spelling stuff
 
 ## Getting started
 
-# TODO: Update this to reflect the makefile
-1. `docker-compose -f local.yml build`
-2. `pre-commit install`
-3. `docker-compose -f local.yml up -d`
+1. `pre-commit install`
+2. `make deploy-local`
 
 ## Settings
 
@@ -85,5 +83,7 @@ See detailed [cookiecutter-django Docker documentation](http://cookiecutter-djan
 - [x] rename the containers. They are just `node` and `django` etc...
 - [ ] Figure out database connection stuff. How does it work locally, and swap out docker for RDS in prod
     * It's doing some default stuff to connect to 5432. That'll collide with other projects as it's the default port for postgres
-- [ ] Do the dumb stuff in the `build_and_push` file
-- [ ] Basic repo hygeine :smh:...
+- [ ] Basic repo hygeine :smh:... Get rid of the .env files
+- [ ] What is merge_production_dotenvs_in_dotenv.py doing?
+- [ ] Figure out how to use flower
+- [ ] Figure out what manage.py is all about

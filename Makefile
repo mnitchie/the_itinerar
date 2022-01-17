@@ -9,6 +9,7 @@ Recipes: Default
 
 # Recipes: Phony ("not a file")
 .PHONY : build $\
+         connect-db $\
          deploy-local $\
          help $\
 # bash $\
@@ -33,9 +34,7 @@ Recipes: Default
 # # Recipes: Aliases
 # bash: shell
 
-# # Recipes
-# build: ## build/rebuild all services
-# 	docker-compose -f $(compose_base) build
+# Recipes
 
 # clean: ## remove build/run artifacts
 # 	@find . -name __pycache__ -prune -exec rm -rf {} \;
@@ -46,6 +45,9 @@ Recipes: Default
 
 build:
 	docker-compose -f $(compose_base) -f $(compose_local) build
+
+connect-db:
+	docker-compose -f $(compose_base) -f $(compose_local) exec postgres psql -h localhost -d the_itinerar -U mnQxDDduKpXOoeoMvElNYwcojpuOFfoK
 
 deploy-local:
 	docker-compose -f $(compose_base) -f $(compose_local) up -d
@@ -76,9 +78,6 @@ help: ## show help
 
 # test: ## run tests
 # 	docker-compose -f $(compose_base) run pytest
-
-# up: ## start all services
-# 	docker-compose -f $(compose_base) up
 
 # upgrade-build-run-django:
 # 	docker-compose -f $(compose_base) -f $(compose_upgrade) build django

@@ -32,6 +32,7 @@ services:
     container_name: itinerar_postgres
     volumes:
       - local_postgres_data:/var/lib/postgresql/data:Z
+      # TODO: Don't need backups n' stuff just for a local deployment
       - local_postgres_data_backups:/backups:z
     env_file:
       - ./.envs/.local/.postgres
