@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=the_itinerar
+POSTGRES_USER=mnQxDDduKpXOoeoMvElNYwcojpuOFfoK
+POSTGRES_PASSWORD=C6azEKcL1mNdz1XRi4E44S7KDyO7nnjRF76vB03sNHGwbqquZNVMYRBDdNOFFw2h
